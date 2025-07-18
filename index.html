@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alfirgiawan Rasikh - Professional Portfolio</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Apply Inter font and a darker background */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a101f; /* Darker background */
+            color: #f1f5f9;
+        }
+        
+        /* Text gradient for prominent text */
+        .text-gradient {
+            background-image: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        /* Simple background for hero section */
+        .hero-background {
+            background-color: #0a101f;
+        }
+
+        /* Fade-in animation on scroll */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Fade-in animation for hero on page load */
+        .fade-in-on-load {
+            opacity: 0;
+            transition: opacity 1.2s ease-in;
+        }
+        .fade-in-on-load.is-visible {
+            opacity: 1;
+        }
+        
+        /* Canvas for particle animation */
+        #particle-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="sticky top-0 z-50 bg-slate-900/70 backdrop-blur-lg border-b border-slate-700/50">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <a href="#home" class="text-2xl font-bold text-gradient">AR</a>
+                </div>
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#about" class="px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-colors">About</a>
+                        <a href="#projects" class="px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-colors">Projects</a>
+                        <a href="#skills" class="px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-colors">Skills</a>
+                        <a href="#contact" class="px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-colors">Contact</a>
+                    </div>
+                </div>
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-slate-400 hover:text-white hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                        <span class="sr-only">Open main menu</span>
+                        <i data-lucide="menu" class="block h-6 w-6"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+        <!-- Mobile Menu, show/hide based on menu state. -->
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#about" class="mobile-menu-link block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-colors">About</a>
+                <a href="#projects" class="mobile-menu-link block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-colors">Projects</a>
+                <a href="#skills" class="mobile-menu-link block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-colors">Skills</a>
+                <a href="#contact" class="mobile-menu-link block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-colors">Contact</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8">
+
+        <section id="home" class="relative flex items-center justify-center min-h-screen text-center overflow-hidden -mx-4 sm:-mx-6 lg:-mx-8 hero-background">
+            <canvas id="particle-canvas"></canvas>
+            <div class="relative z-20 px-4 fade-in-on-load">
+                <p class="text-sky-300 font-medium mb-2 text-lg">Hello, I'm</p>
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-white">
+                    Alfirgiawan Rasikh
+                </h1>
+                <h2 class="mt-4 text-2xl md:text-3xl font-semibold text-slate-300">
+                    A Passionate Software Developer
+                </h2>
+                <p class="mt-6 max-w-2xl mx-auto text-slate-400 text-lg">
+                    I build modern, responsive, and user-friendly web applications. Turning complex problems into elegant solutions is my specialty.
+                </p>
+                <div class="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4">
+                    <a href="#projects" class="w-full sm:w-auto inline-block bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold px-8 py-4 rounded-lg shadow-lg shadow-sky-500/30 hover:shadow-xl hover:shadow-sky-500/40 transition-all duration-300 transform hover:scale-105">
+                        View My Work
+                    </a>
+                    <a href="#contact" class="w-full sm:w-auto inline-block bg-slate-800/80 text-slate-300 font-semibold px-8 py-4 rounded-lg hover:bg-slate-700 transition-all duration-300">
+                        Get In Touch
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="py-24 fade-in-section">
+            <h2 class="text-4xl font-bold text-center mb-4 text-white">About Me</h2>
+            <div class="w-24 h-1 bg-sky-500 mx-auto mb-16 rounded-full"></div>
+            <div class="flex flex-col md:flex-row items-center gap-12 lg:gap-16">
+                <div class="md:w-1/3 flex justify-center">
+                    <div class="relative">
+                         <img 
+                          src="images/profile.jpg" 
+                          onerror="this.onerror=null;this.src='https://placehold.co/400x400/0a101f/38bdf8?text=AR';"
+                          alt="A portrait of Alfirgiawan Rasikh" 
+                          class="rounded-full w-64 h-64 md:w-80 md:h-80 object-cover ring-4 ring-slate-700 shadow-2xl"
+                        />
+                        <div class="absolute -top-4 -left-4 w-32 h-32 bg-sky-500/10 rounded-full blur-2xl -z-10"></div>
+                        <div class="absolute -bottom-4 -right-4 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl -z-10"></div>
+                    </div>
+                </div>
+                <div class="md:w-2/3 text-lg text-slate-300 space-y-4">
+                    <p>
+                      I'm a Developer with experience in creating dynamic and high-performance applications. My journey in tech started with a fascination for how things work, which quickly evolved into a passion for coding and software architecture.
+                    </p>
+                    <p>
+                      I specialize in web and desktop development, but I'm always eager to learn new technologies. I thrive in collaborative environments and I'm committed to writing clean, maintainable, and efficient code.
+                    </p>
+                    <p>
+                      When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, or brewing the perfect cup of coffee.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="py-24 fade-in-section">
+            <h2 class="text-4xl font-bold text-center mb-4 text-white">My Projects</h2>
+            <div class="w-24 h-1 bg-sky-500 mx-auto mb-16 rounded-full"></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <div class="group bg-slate-800/50 rounded-lg overflow-hidden shadow-lg h-full flex flex-col transition-transform duration-300 hover:scale-105">
+                    <div class="overflow-hidden"><img class="w-full h-48 object-cover" src="images/projek1.png" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1e293b/94a3b8?text=Project+1';" alt="Web Kasir Project Screenshot"></div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-xl font-bold mb-2 text-white">Point of Sale (POS) Application</h3>
+                        <p class="text-slate-400 mb-4">A web-based Point of Sale (POS) application to help businesses manage sales transactions efficiently, built with a responsive Bootstrap interface.</p>
+                        <div class="text-slate-400 mb-4 text-sm">
+                            <p class="font-semibold text-slate-300 mb-2">Key Features:</p>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>Product Management (CRUD)</li>
+                                <li>Transaction Processing & Receipt Printing</li>
+                                <li>Sales History & Reports</li>
+                            </ul>
+                        </div>
+                         <p class="text-xs text-sky-300/80 mb-4 bg-sky-900/30 p-2 rounded-md">
+                            <i data-lucide="info" class="inline-block w-3 h-3 mr-1 align-middle"></i>
+                            Login with: username: <strong>admin</strong>, password: <strong>admin</strong>
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-sky-900/50 text-sky-300 text-xs font-semibold px-2.5 py-1 rounded-full">PHP</span>
+                            <span class="bg-sky-900/50 text-sky-300 text-xs font-semibold px-2.5 py-1 rounded-full">MySQL</span>
+                            <span class="bg-sky-900/50 text-sky-300 text-xs font-semibold px-2.5 py-1 rounded-full">Bootstrap</span>
+                            <span class="bg-sky-900/50 text-sky-300 text-xs font-semibold px-2.5 py-1 rounded-full">JavaScript</span>
+                        </div>
+                        <div class="flex space-x-4 mt-auto pt-4">
+                            <a href="https://kasirkunnn.free.nf/" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:text-sky-300 font-semibold transition-colors">Live Demo</a>
+                            <a href="https://github.com/AlfirgiawanRasikh/kasirkun" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white font-semibold transition-colors">Source Code</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group bg-slate-800/50 rounded-lg overflow-hidden shadow-lg h-full flex flex-col transition-transform duration-300 hover:scale-105">
+                    <div class="overflow-hidden"><img class="w-full h-48 object-cover" src="images/projek2.png" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1e293b/94a3b8?text=Project+2';" alt="Student Management System Screenshot"></div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-xl font-bold mb-2 text-white">Student Management System</h3>
+                        <p class="text-slate-400 mb-4">A web-based Student Management System to replace manual data handling. Built with PHP & MySQL, featuring an interactive dashboard and real-time search.</p>
+                        <div class="text-slate-400 mb-4 text-sm">
+                            <p class="font-semibold text-slate-300 mb-2">Key Features:</p>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>Interactive Dashboard with Chart.js visualization</li>
+                                <li>Real-time data search using AJAX</li>
+                                <li>Full CRUD functionality with file uploads</li>
+                            </ul>
+                        </div>
+                        <p class="text-xs text-sky-300/80 mb-4 bg-sky-900/30 p-2 rounded-md">
+                            <i data-lucide="info" class="inline-block w-3 h-3 mr-1 align-middle"></i>
+                            Login with: username: <strong>admin</strong>, password: <strong>admin</strong>
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-sky-900/50 text-sky-300 text-xs font-semibold px-2.5 py-1 rounded-full">PHP</span>
+                            <span class="bg-sky-900/50 text-sky-300 text-xs font-semibold px-2.5 py-1 rounded-full">MySQL</span>
+                            <span class="bg-sky-900/50 text-sky-300 text-xs font-semibold px-2.5 py-1 rounded-full">JavaScript</span>
+                            <span class="bg-sky-900/50 text-sky-300 text-xs font-semibold px-2.5 py-1 rounded-full">AJAX</span>
+                            <span class="bg-sky-900/50 text-sky-300 text-xs font-semibold px-2.5 py-1 rounded-full">Chart.js</span>
+                            <span class="bg-sky-900/50 text-sky-300 text-xs font-semibold px-2.5 py-1 rounded-full">CSS3</span>
+                            <span class="bg-sky-900/50 text-sky-300 text-xs font-semibold px-2.5 py-1 rounded-full">HTML5</span>
+                        </div>
+                        <div class="flex space-x-4 mt-auto pt-4">
+                            <a href="http://mahasigma.free.nf" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:text-sky-300 font-semibold transition-colors">Live Demo</a>
+                            <a href="https://github.com/miruzenn/mahasigma" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white font-semibold transition-colors">Source Code</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group bg-slate-800/50 rounded-lg overflow-hidden shadow-lg h-full flex flex-col transition-transform duration-300 hover:scale-105">
+                    <div class="overflow-hidden"><img class="w-full h-48 object-cover" src="images/projek3.png" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1e293b/94a3b8?text=Project+3';" alt="Employee Management App Screenshot"></div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-xl font-bold mb-2 text-white">Sistem Manajemen Data Karyawan</h3>
+                        <p class="text-slate-400 mb-4 flex-grow">A desktop application for managing employee data, built using Java and the NetBeans IDE.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-sky-900/50 text-sky-300 text-xs font-semibold px-2.5 py-1 rounded-full">Java</span>
+                            <span class="bg-sky-900/50 text-sky-300 text-xs font-semibold px-2.5 py-1 rounded-full">NetBeans</span>
+                            <span class="bg-sky-900/50 text-sky-300 text-xs font-semibold px-2.5 py-1 rounded-full">Java Swing</span>
+                        </div>
+                        <div class="flex space-x-4 mt-auto pt-4">
+                            <a href="#" class="text-sky-400 hover:text-sky-300 font-semibold transition-colors">View Details</a>
+                            <a href="#" class="text-slate-400 hover:text-white font-semibold transition-colors">Source Code</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="py-24 fade-in-section">
+            <h2 class="text-4xl font-bold text-center mb-4 text-white">Technologies I Use</h2>
+            <div class="w-24 h-1 bg-sky-500 mx-auto mb-16 rounded-full"></div>
+            <div class="flex flex-wrap justify-center items-center gap-8 md:gap-12 max-w-4xl mx-auto">
+                <div class="text-center group">
+                    <div class="w-24 h-24 mx-auto bg-slate-800/50 rounded-full flex items-center justify-center transition-all duration-300 group-hover:bg-sky-500/20 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-sky-500/10">
+                        <i data-lucide="code" class="w-12 h-12 text-slate-400 group-hover:text-sky-300 transition-colors"></i>
+                    </div>
+                    <p class="mt-4 text-white font-semibold">HTML5</p>
+                </div>
+                <div class="text-center group">
+                    <div class="w-24 h-24 mx-auto bg-slate-800/50 rounded-full flex items-center justify-center transition-all duration-300 group-hover:bg-sky-500/20 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-sky-500/10">
+                        <i data-lucide="file-json-2" class="w-12 h-12 text-slate-400 group-hover:text-sky-300 transition-colors"></i>
+                    </div>
+                    <p class="mt-4 text-white font-semibold">CSS3</p>
+                </div>
+                <div class="text-center group">
+                    <div class="w-24 h-24 mx-auto bg-slate-800/50 rounded-full flex items-center justify-center transition-all duration-300 group-hover:bg-sky-500/20 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-sky-500/10">
+                        <i data-lucide="bot" class="w-12 h-12 text-slate-400 group-hover:text-sky-300 transition-colors"></i>
+                    </div>
+                    <p class="mt-4 text-white font-semibold">JavaScript</p>
+                </div>
+                <div class="text-center group">
+                    <div class="w-24 h-24 mx-auto bg-slate-800/50 rounded-full flex items-center justify-center transition-all duration-300 group-hover:bg-sky-500/20 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-sky-500/10">
+                        <i data-lucide="atom" class="w-12 h-12 text-slate-400 group-hover:text-sky-300 transition-colors"></i>
+                    </div>
+                    <p class="mt-4 text-white font-semibold">PHP</p>
+                </div>
+                <div class="text-center group">
+                    <div class="w-24 h-24 mx-auto bg-slate-800/50 rounded-full flex items-center justify-center transition-all duration-300 group-hover:bg-sky-500/20 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-sky-500/10">
+                        <i data-lucide="box" class="w-12 h-12 text-slate-400 group-hover:text-sky-300 transition-colors"></i>
+                    </div>
+                    <p class="mt-4 text-white font-semibold">Java</p>
+                </div>
+                <div class="text-center group">
+                    <div class="w-24 h-24 mx-auto bg-slate-800/50 rounded-full flex items-center justify-center transition-all duration-300 group-hover:bg-sky-500/20 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-sky-500/10">
+                        <i data-lucide="database" class="w-12 h-12 text-slate-400 group-hover:text-sky-300 transition-colors"></i>
+                    </div>
+                    <p class="mt-4 text-white font-semibold">MySQL</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="py-24 fade-in-section text-center">
+            <h2 class="text-4xl font-bold text-center mb-4 text-white">Get In Touch</h2>
+            <div class="w-24 h-1 bg-sky-500 mx-auto mb-8 rounded-full"></div>
+            <p class="max-w-xl mx-auto text-lg text-slate-300 mb-8">
+              I'm currently open to new opportunities and collaborations. If you have a project in mind or just want to say hello, feel free to reach out!
+            </p>
+            <a href="mailto:alfirgiawan234@gmail.com" class="inline-block bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold px-8 py-4 rounded-lg shadow-lg shadow-sky-500/30 hover:shadow-xl hover:shadow-sky-500/40 transition-all duration-300 transform hover:scale-105">
+              Say Hello
+            </a>
+            <div class="flex justify-center space-x-6 mt-12">
+                <a href="https://github.com/AlfirgiawanRasikh" target="_blank" rel="noopener noreferrer" aria-label="Github Profile" class="text-slate-400 hover:text-white transition-colors transform hover:scale-110"><i data-lucide="github" class="w-8 h-8"></i></a>
+                <a href="https://www.linkedin.com/in/alfirgiawanrasikh/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile" class="text-slate-400 hover:text-white transition-colors transform hover:scale-110"><i data-lucide="linkedin" class="w-8 h-8"></i></a>
+                <a href="https://www.instagram.com/_akufir/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Profile" class="text-slate-400 hover:text-white transition-colors transform hover:scale-110"><i data-lucide="instagram" class="w-8 h-8"></i></a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="border-t border-slate-800 mt-20">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center text-slate-400">
+            <p>&copy; 2025 Alfirgiawan Rasikh. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        // --- Hero Section Fade-in on Load ---
+        window.addEventListener('load', () => {
+            document.querySelector('.fade-in-on-load').classList.add('is-visible');
+        });
+
+        // --- Mobile Menu Toggle Script ---
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Close mobile menu when a link is clicked
+        document.querySelectorAll('.mobile-menu-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // --- Floating Bubbles Particle Animation Script ---
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor(x, y, vx, vy, size, color) {
+                this.x = x;
+                this.y = y;
+                this.vx = vx;
+                this.vy = vy;
+                this.size = size;
+                this.color = color;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+            update() {
+                // Reset particle when it goes off the top
+                if (this.y < -this.size) {
+                    this.y = canvas.height + this.size;
+                    this.x = Math.random() * canvas.width;
+                    this.size = (Math.random() * 3) + 1;
+                    this.vy = (Math.random() * -1.5) - 0.5; // Slower speed
+                }
+                
+                this.x += this.vx;
+                this.y += this.vy;
+                this.draw();
+            }
+        }
+
+        function init() {
+            particles = [];
+            let numberOfParticles = (canvas.height * canvas.width) / 15000; // Fewer particles
+            for (let i = 0; i < numberOfParticles; i++) {
+                let size = (Math.random() * 3) + 1;
+                let x = Math.random() * canvas.width;
+                let y = Math.random() * canvas.height;
+                let vx = (Math.random() * 0.4) - 0.2; // Sideways drift
+                let vy = (Math.random() * -1.5) - 0.5; // Upward speed
+                let alpha = (Math.random() * 0.5) + 0.1; // Opacity for depth
+                let color = `rgba(200, 220, 255, ${alpha})`;
+                particles.push(new Particle(x, y, vx, vy, size, color));
+            }
+        }
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+            }
+        }
+
+        init();
+        animate();
+
+
+        // --- Fade-in on Scroll Script ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('.fade-in-section').forEach(section => {
+            observer.observe(section);
+        });
+
+    </script>
+</body>
+</html>
